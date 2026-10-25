@@ -1,7 +1,8 @@
 # Сире відео й кадри не комітимо: за межі пристрою виходять
 # лише знеособлені метадані (пропозиція, розділ 3).
 # Тут же data/samples/ і data/gt_videos/ (python download_samples.py).
-data/
+data/*
+!data/README.md
 *.mp4
 *.mov
 *.mkv
