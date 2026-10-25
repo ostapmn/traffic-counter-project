@@ -1,5 +1,6 @@
 # Сире відео й кадри не комітимо: за межі пристрою виходять
 # лише знеособлені метадані (пропозиція, розділ 3).
+# Тут же data/samples/ і data/gt_videos/ (python download_samples.py).
 data/
 *.mp4
 *.mov
@@ -12,14 +13,19 @@ data/
 *.pt
 *.onnx
 
-# Вихід ultralytics
+# Вихід ultralytics і розмічені відео
 runs/
+out/
+
+# Службові папки після розпакування zip на Mac
+__MACOSX/
 
 # Python
 __pycache__/
 *.py[cod]
 .venv/
 .ipynb_checkpoints/
+.pytest_cache/
 .DS_Store
 
 GATES.md
