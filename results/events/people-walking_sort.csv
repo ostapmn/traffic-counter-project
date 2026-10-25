@@ -1,0 +1,17 @@
+t_seconds,class,direction,track_id
+0.8,person,B,6
+0.84,person,A,7
+1.56,person,B,8
+2.6,person,A,54
+2.72,person,B,3
+3.84,person,B,20
+4.2,person,A,14
+4.68,person,A,99
+5.48,person,B,1
+5.76,person,A,89
+5.96,person,A,107
+7.36,person,B,52
+7.52,person,A,27
+7.72,person,B,67
+9.04,person,B,73
+10.44,person,A,112

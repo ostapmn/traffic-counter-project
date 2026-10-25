@@ -1,0 +1,10 @@
+time,clip,tracker,imgsz,device,frames,fps,person_A,person_B,cyclist_A,cyclist_B,person_total,cyclist_total
+2026-10-25T16:17:13,people-walking.mp4,bytetrack,640,cuda,341,45.8,10,8,0,0,18,0
+2026-10-25T16:17:18,people-walking.mp4,sort,640,cuda,341,59.7,8,8,0,0,16,0
+2026-10-25T16:17:24,people-walking.mp4,none,640,cuda,341,64.4,,,,,30,0
+2026-10-25T16:17:42,market-square.mp4,bytetrack,1920,cuda,474,25.6,11,9,0,0,20,0
+2026-10-25T16:18:00,market-square.mp4,sort,1920,cuda,474,26.5,8,9,0,0,17,0
+2026-10-25T16:18:17,market-square.mp4,none,1920,cuda,474,29.2,,,,,98,0
+2026-10-25T16:18:56,subway.mp4,bytetrack,1280,cuda,1298,33.5,15,8,0,0,23,0
+2026-10-25T16:19:32,subway.mp4,sort,1280,cuda,1298,36.1,11,7,0,0,18,0
+2026-10-25T16:20:09,subway.mp4,none,1280,cuda,1298,35.6,,,,,39,0
