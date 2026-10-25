@@ -1,17 +1,20 @@
 """Малює лінію підрахунку та стрілки напрямків A/B на відео — для ручного підрахунку.
 
 Запуск:
-    python draw_line.py data/samples/people-walking.mp4 -o data/people_line.mp4
-    python draw_line.py data/samples/market-square.mp4 -o data/market_line.mp4 \
-        --line 0 2300 2160 2300 --scale 0.5
+    python draw_line.py data/samples/people-walking.mp4 -o data/gt_videos/people-walking_line.mp4
+    python draw_line.py data/samples/market-square.mp4 -o data/gt_videos/market-square_line.mp4 --scale 0.5
 
-Лінія та сама, що в `track.py --line`. Напрямок A — рух із боку side<0 у бік side>0
-(для лінії зліва направо — вниз по кадру), B — навпаки.
+Лінія та сама, що в `track.py`: явна `--line`, інакше з clips.csv, інакше горизонталь
+посередині. Напрямок A — рух із боку side<0 у бік side>0 (для лінії зліва направо —
+вниз по кадру), B — навпаки.
 """
 
 import argparse
+from pathlib import Path
 
 import cv2
+
+from clips import clip_config, clip_line
 
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 RED = (0, 0, 255)
@@ -31,12 +34,20 @@ def main():
     args = ap.parse_args()
 
     cap = cv2.VideoCapture(args.source)
-    fps = cap.get(cv2.CAP_PROP_FPS)
+    if not cap.isOpened():
+        raise RuntimeError(f"не відкривається: {args.source}")
+    fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
     w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    # лінія в координатах оригіналу, як у track.py; за замовчуванням горизонталь посередині
-    x1, y1, x2, y2 = args.line or (0, h // 2, w, h // 2)
+    # лінія в координатах оригіналу, як у track.py: --line, потім clips.csv, потім середина
+    clip = clip_config(args.source)
+    if args.line:
+        x1, y1, x2, y2 = args.line
+    elif clip:
+        x1, y1, x2, y2 = clip_line(clip)
+    else:
+        x1, y1, x2, y2 = 0, h // 2, w, h // 2
     a, b = (x1, y1), (x2, y2)
 
     # стрілки ставимо посередині лінії: нормаль напрямку side<0 → side>0 — це напрямок A
@@ -51,6 +62,7 @@ def main():
     assert side(to_a, a, b) > 0 > side(to_b, a, b)
 
     out_w, out_h = int(w * args.scale), int(h * args.scale)
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     writer = cv2.VideoWriter(args.output, cv2.VideoWriter_fourcc(*"mp4v"), fps, (out_w, out_h))
 
     thick = max(2, h // 400)
